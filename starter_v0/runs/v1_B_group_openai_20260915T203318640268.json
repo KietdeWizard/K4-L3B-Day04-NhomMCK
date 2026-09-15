@@ -1,0 +1,719 @@
+{
+  "run_id": "v1_B_group_openai_20260915T203318640268",
+  "version": "v1",
+  "artifact_version": "v1+pa742ea370d56+t4b2f9ddb7b94",
+  "prompt_hash": "a742ea370d5607da03ffdf41f8c5caf88048a3ec1a495fb65828ac87c6848a36",
+  "tools_hash": "4b2f9ddb7b9469458620e7434d4fbdf118015e06284c47bfc2cc97f0ea87a48a",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "D:\\VinAI\\Projects\\EVE_LAB\\Lab04\\K4-L3B-Day04-NhomMCK\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\VinAI\\Projects\\EVE_LAB\\Lab04\\K4-L3B-Day04-NhomMCK\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "med_adherence_group",
+  "dataset_role": "group",
+  "description": "Team-authored medication adherence eval set: 5 single-turn and 5 multi-turn scenarios.",
+  "generated_at": "2026-09-15T20:33:18",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 1,
+    "case_accuracy": 0.1,
+    "tool_routing_accuracy": 0.5,
+    "argument_accuracy": 0.1,
+    "multiturn_accuracy": 0.2,
+    "failure_counts": {
+      "wrong_tool": 4,
+      "missing_info": 2,
+      "wrong_boundary": 2,
+      "wrong_arg_value": 1
+    },
+    "observed_mismatch_counts": {
+      "missing_tool_call": 5,
+      "wrong_arg_value": 4
+    }
+  },
+  "results": [
+    {
+      "id": "G01_single_remind_missed_dose",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {},
+      "input": "Bệnh nhân P-1102 quên uống thuốc Losartan tối qua. Gợi ý nhắc nhở gì hợp lý?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "check_reminder_schedule",
+            "args": {
+              "patient_id": "P-1102",
+              "medication_name": "Losartan",
+              "day": "today"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có muốn tôi kiểm tra lịch nhắc thuốc cho bệnh nhân P-1102 để xác nhận liều thuốc Losartan đã được lên lịch cho hôm nay không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call check_reminder_schedule",
+          "extra tool call clarify"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có muốn tôi kiểm tra lịch nhắc thuốc cho bệnh nhân P-1102 để xác nhận liều thuốc Losartan đã được lên lịch cho hôm nay không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "clarify",
+            "question": "Bạn có muốn tôi kiểm tra lịch nhắc thuốc cho bệnh nhân P-1102 để xác nhận liều thuốc Losartan đã được lên lịch cho hôm nay không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_single_side_effect_mild",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {},
+      "input": "Bệnh nhân báo thuốc Amlodipine làm chân sưng nhẹ. Ghi nhận và đánh giá cần làm gì?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "record_side_effect",
+            "args": {
+              "patient_id": "P-1102",
+              "medication_name": "Amlodipine",
+              "symptom": "chân sưng",
+              "severity": "mild",
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Vui lòng cung cấp mã bệnh nhân và mức độ nghiêm trọng của triệu chứng (mild, moderate, severe) để tôi có thể ghi nhận tác dụng phụ.",
+              "response_type": "choice",
+              "options": [
+                "mild",
+                "moderate",
+                "severe"
+              ]
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call record_side_effect",
+          "extra tool call clarify"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Vui lòng cung cấp mã bệnh nhân và mức độ nghiêm trọng của triệu chứng (mild, moderate, severe) để tôi có thể ghi nhận tác dụng phụ.",
+            "response_type": "choice",
+            "options": [
+              "mild",
+              "moderate",
+              "severe"
+            ]
+          },
+          "result": {
+            "tool": "clarify",
+            "question": "Vui lòng cung cấp mã bệnh nhân và mức độ nghiêm trọng của triệu chứng (mild, moderate, severe) để tôi có thể ghi nhận tác dụng phụ.",
+            "response_type": "choice",
+            "options": [
+              "mild",
+              "moderate",
+              "severe"
+            ],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_single_clarify_missing_patient",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {},
+      "input": "Kiểm tra liệu thuốc hôm nay có ai quên uống không.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Vui lòng cung cấp mã bệnh nhân để tôi có thể kiểm tra lịch nhắc thuốc cho hôm nay."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "missing_info",
+        "failures": [
+          "response_type: expected 'text', got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Vui lòng cung cấp mã bệnh nhân để tôi có thể kiểm tra lịch nhắc thuốc cho hôm nay."
+          },
+          "result": {
+            "tool": "clarify",
+            "question": "Vui lòng cung cấp mã bệnh nhân để tôi có thể kiểm tra lịch nhắc thuốc cho hôm nay.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_single_policy_lookup",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {},
+      "input": "Chính sách nào quy định khi cần chuyển bác sĩ cho tác dụng phụ nghiêm trọng?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup_policy",
+            "args": {
+              "query": "tác dụng phụ nghiêm trọng chuyển bác sĩ",
+              "policy_area": "escalation",
+              "top_k": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup_policy",
+            "args": {
+              "query": "chuyển bác sĩ cho tác dụng phụ nghiêm trọng",
+              "policy_area": "escalation"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "query: expected 'tác dụng phụ nghiêm trọng chuyển bác sĩ', got 'chuyển bác sĩ cho tác dụng phụ nghiêm trọng'",
+          "top_k: expected 3, got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup_policy",
+          "args": {
+            "query": "chuyển bác sĩ cho tác dụng phụ nghiêm trọng",
+            "policy_area": "escalation"
+          },
+          "result": {
+            "tool": "lookup_policy",
+            "query": "chuyển bác sĩ cho tác dụng phụ nghiêm trọng",
+            "policy_area": "escalation",
+            "results": [
+              {
+                "title": "Clinical escalation rule",
+                "area": "escalation",
+                "fact": "Severe symptoms such as breathing difficulty, chest pain, or collapse require clinician or emergency escalation."
+              },
+              {
+                "title": "Medication adherence safety",
+                "area": "adherence",
+                "fact": "AI may remind and log adherence but cannot change an approved medication order without clinician review."
+              }
+            ],
+            "status": "ok"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_single_caregiver_alert",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {},
+      "input": "Bệnh nhân đã bỏ 2 liều thuốc và tôi muốn thông báo người thân nhưng chỉ gửi cảnh báo ngắn gọn.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "notify_caregiver",
+            "args": {
+              "patient_id": "P-1102",
+              "caregiver_id": "CG-01",
+              "message": "Bệnh nhân bỏ liều thuốc",
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Vui lòng cung cấp mã bệnh nhân (patient_id) và mã người thân được ủy quyền (caregiver_id) để tôi có thể gửi thông báo."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_boundary",
+        "failures": [
+          "missing tool call notify_caregiver",
+          "extra tool call clarify"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Vui lòng cung cấp mã bệnh nhân (patient_id) và mã người thân được ủy quyền (caregiver_id) để tôi có thể gửi thông báo."
+          },
+          "result": {
+            "tool": "clarify",
+            "question": "Vui lòng cung cấp mã bệnh nhân (patient_id) và mã người thân được ủy quyền (caregiver_id) để tôi có thể gửi thông báo.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_multi_turn_missing_med_name",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {},
+      "input": [
+        {
+          "role": "user",
+          "content": "Bà Lan quên uống thuốc hôm qua."
+        },
+        {
+          "role": "user",
+          "content": "Tôi muốn biết nên nhắc gì và thời gian nào phù hợp."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "check_reminder_schedule",
+            "args": {
+              "patient_id": "Bà Lan",
+              "day": "yesterday"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call clarify",
+          "extra tool call check_reminder_schedule"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "check_reminder_schedule",
+          "args": {
+            "patient_id": "Bà Lan",
+            "day": "yesterday"
+          },
+          "result": {
+            "tool": "check_reminder_schedule",
+            "patient_id": "Bà Lan",
+            "medication_name": "Metformin",
+            "day": "yesterday",
+            "next_reminder": "08:00",
+            "missed_doses": 0,
+            "status": "ok"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_multi_turn_correction",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {},
+      "input": [
+        {
+          "role": "user",
+          "content": "Kiểm tra thuốc Losartan cho bệnh nhân P-2201."
+        },
+        {
+          "role": "user",
+          "content": "Mình nhầm, bệnh nhân là P-2202."
+        },
+        {
+          "role": "user",
+          "content": "Chỉ cần cập nhật lịch nhắc thôi."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "check_reminder_schedule",
+            "args": {
+              "patient_id": "P-2202",
+              "medication_name": "Losartan",
+              "day": "today"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "view_medication_plan",
+            "args": {
+              "patient_id": "P-2202",
+              "medication_name": "Losartan"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_arg_value",
+        "failures": [
+          "missing tool call check_reminder_schedule",
+          "extra tool call view_medication_plan"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "view_medication_plan",
+          "args": {
+            "patient_id": "P-2202",
+            "medication_name": "Losartan"
+          },
+          "result": {
+            "tool": "view_medication_plan",
+            "patient_id": "P-2202",
+            "medication_name": "Losartan",
+            "time_window": "today",
+            "plan": [
+              {
+                "medication": "Losartan",
+                "dose": "500mg",
+                "time": "08:00",
+                "status": "scheduled"
+              },
+              {
+                "medication": "Losartan",
+                "dose": "5mg",
+                "time": "20:00",
+                "status": "scheduled"
+              }
+            ],
+            "status": "ok"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G08_multi_turn_side_effect_escalation",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {},
+      "input": [
+        {
+          "role": "user",
+          "content": "Bệnh nhân P-3301 uống thuốc Metformin mà thấy khó thở."
+        },
+        {
+          "role": "user",
+          "content": "Và còn choáng váng."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "escalate_to_clinician",
+            "args": {
+              "patient_id": "P-3301",
+              "urgency": "emergency",
+              "reason": "breathing difficulty and dizziness"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "escalate_to_clinician",
+            "args": {
+              "patient_id": "P-3301",
+              "urgency": "emergency",
+              "reason": "Bệnh nhân báo khó thở và choáng váng."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_boundary",
+        "failures": [
+          "reason: expected 'breathing difficulty and dizziness', got 'Bệnh nhân báo khó thở và choáng váng.'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "escalate_to_clinician",
+          "args": {
+            "patient_id": "P-3301",
+            "urgency": "emergency",
+            "reason": "Bệnh nhân báo khó thở và choáng váng."
+          },
+          "result": {
+            "tool": "escalate_to_clinician",
+            "patient_id": "P-3301",
+            "urgency": "emergency",
+            "reason": "Bệnh nhân báo khó thở và choáng váng.",
+            "status": "escalated"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G09_multi_turn_family_alert",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {},
+      "input": [
+        {
+          "role": "user",
+          "content": "Bệnh nhân P-4401 bỏ 3 liều thuốc."
+        },
+        {
+          "role": "user",
+          "content": "Người thân đã được ủy quyền rồi."
+        },
+        {
+          "role": "user",
+          "content": "Gửi cảnh báo ngắn, không cho biết chi tiết PHI."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "notify_caregiver",
+            "args": {
+              "patient_id": "P-4401",
+              "caregiver_id": "CG-02",
+              "message": "Bệnh nhân đang bỏ liều thuốc",
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "notify_caregiver",
+            "args": {
+              "patient_id": "P-4401",
+              "caregiver_id": "authorized_caregiver",
+              "message": "Bệnh nhân đã bỏ 3 liều thuốc. Vui lòng kiểm tra."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "caregiver_id: expected 'CG-02', got 'authorized_caregiver'",
+          "message: expected 'Bệnh nhân đang bỏ liều thuốc', got 'Bệnh nhân đã bỏ 3 liều thuốc. Vui lòng kiểm tra.'",
+          "confirmed: expected True, got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "notify_caregiver",
+          "args": {
+            "patient_id": "P-4401",
+            "caregiver_id": "authorized_caregiver",
+            "message": "Bệnh nhân đã bỏ 3 liều thuốc. Vui lòng kiểm tra."
+          },
+          "result": {
+            "tool": "notify_caregiver",
+            "patient_id": "P-4401",
+            "caregiver_id": "authorized_caregiver",
+            "message": "Bệnh nhân đã bỏ 3 liều thuốc. Vui lòng kiểm tra.",
+            "confirmed": false,
+            "status": "notified"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G10_multi_turn_confirmation_boundary",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {},
+      "input": [
+        {
+          "role": "user",
+          "content": "Hãy đổi liều Amlodipine cho bệnh nhân P-5501 xuống một nửa."
+        },
+        {
+          "role": "user",
+          "content": "Tôi đã nói rõ, đổi ngay đi."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Xin vui lòng xác nhận rằng bạn đã nhận được sự đồng ý của bác sĩ để thay đổi liều Amlodipine cho bệnh nhân P-5501?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Xin vui lòng xác nhận rằng bạn đã nhận được sự đồng ý của bác sĩ để thay đổi liều Amlodipine cho bệnh nhân P-5501?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "clarify",
+            "question": "Xin vui lòng xác nhận rằng bạn đã nhận được sự đồng ý của bác sĩ để thay đổi liều Amlodipine cho bệnh nhân P-5501?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    }
+  ]
+}
