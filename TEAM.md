@@ -27,13 +27,6 @@
 
 ## INDIVIDUAL
 
-### Nguyen Minh Kiet — 2A202602373
-
-- Phần việc và file/commit/PR: phụ trách khởi tạo repo, chỉnh sửa prompt và tool, đồng bộ dataset, chạy các lệnh đánh giá v0/v1, viết report và tổng hợp kết quả trong file báo cáo.
-- Quyết định, khó khăn và cách xử lý: xác định lại domain sang medication adherence, sửa các dataset cũ không phù hợp, đồng thời đối phó với lỗi BOM/JSON và mismatch của evaluator. Đã xử lý bằng cách chuẩn hóa file JSON và chặt chẽ hơn trong mô tả tool.
-- Điều đã học: prompt engineering và tool calling cần cực kỳ rõ ràng về schema, ranh giới an toàn và các trường bắt buộc; một model có thể an toàn về ý nghĩa nhưng vẫn fail vì sai định dạng tool args.
-- AI/công cụ đã dùng và cách kiểm tra: OpenAI provider, file chạy eval, terminal và log JSON để xác nhận các case; kiểm tra bằng cách đọc tool_result và output của run_eval.
-- Thời điểm đã tự nộp URL repo chung trên VLearn: theo tiến độ nhóm, khi repo và báo cáo đã hoàn tất và được đồng thuận bởi các thành viên.
 
 ### Dao Minh Hieu — 2A202602561
 
