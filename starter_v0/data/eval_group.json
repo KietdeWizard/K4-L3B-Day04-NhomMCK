@@ -1,7 +1,248 @@
 {
-  "dataset_id": "day04_v3_helpdesk_group",
+  "dataset_id": "med_adherence_group",
   "dataset_role": "group",
-  "description": "Template intentionally left empty. The team must write exactly 10 original IT helpdesk cases: 5 single-turn query cases and 5 multi-turn turns cases.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "description": "Team-authored medication adherence eval set: 5 single-turn and 5 multi-turn scenarios.",
+  "cases": [
+    {
+      "id": "G01_single_remind_missed_dose",
+      "phase": "B",
+      "suite": "group",
+      "query": "Bệnh nhân P-1102 quên uống thuốc Losartan tối qua. Gợi ý nhắc nhở gì hợp lý?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "check_reminder_schedule",
+            "args": {
+              "patient_id": "P-1102",
+              "medication_name": "Losartan",
+              "day": "today"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "G02_single_side_effect_mild",
+      "phase": "B",
+      "suite": "group",
+      "query": "Bệnh nhân báo thuốc Amlodipine làm chân sưng nhẹ. Ghi nhận và đánh giá cần làm gì?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "record_side_effect",
+            "args": {
+              "patient_id": "P-1102",
+              "medication_name": "Amlodipine",
+              "symptom": "chân sưng",
+              "severity": "mild",
+              "confirmed": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "G03_single_clarify_missing_patient",
+      "phase": "B",
+      "suite": "group",
+      "query": "Kiểm tra liệu thuốc hôm nay có ai quên uống không.",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "G04_single_policy_lookup",
+      "phase": "B",
+      "suite": "group",
+      "query": "Chính sách nào quy định khi cần chuyển bác sĩ cho tác dụng phụ nghiêm trọng?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup_policy",
+            "args": {
+              "query": "tác dụng phụ nghiêm trọng chuyển bác sĩ",
+              "policy_area": "escalation",
+              "top_k": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "G05_single_caregiver_alert",
+      "phase": "B",
+      "suite": "group",
+      "query": "Bệnh nhân đã bỏ 2 liều thuốc và tôi muốn thông báo người thân nhưng chỉ gửi cảnh báo ngắn gọn.",
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "notify_caregiver",
+            "args": {
+              "patient_id": "P-1102",
+              "caregiver_id": "CG-01",
+              "message": "Bệnh nhân bỏ liều thuốc",
+              "confirmed": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "G06_multi_turn_missing_med_name",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Bà Lan quên uống thuốc hôm qua."
+        },
+        {
+          "role": "user",
+          "content": "Tôi muốn biết nên nhắc gì và thời gian nào phù hợp."
+        }
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "G07_multi_turn_correction",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Kiểm tra thuốc Losartan cho bệnh nhân P-2201."
+        },
+        {
+          "role": "user",
+          "content": "Mình nhầm, bệnh nhân là P-2202."
+        },
+        {
+          "role": "user",
+          "content": "Chỉ cần cập nhật lịch nhắc thôi."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "check_reminder_schedule",
+            "args": {
+              "patient_id": "P-2202",
+              "medication_name": "Losartan",
+              "day": "today"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "G08_multi_turn_side_effect_escalation",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Bệnh nhân P-3301 uống thuốc Metformin mà thấy khó thở."
+        },
+        {
+          "role": "user",
+          "content": "Và còn choáng váng."
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "escalate_to_clinician",
+            "args": {
+              "patient_id": "P-3301",
+              "urgency": "emergency",
+              "reason": "breathing difficulty and dizziness"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "G09_multi_turn_family_alert",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Bệnh nhân P-4401 bỏ 3 liều thuốc."
+        },
+        {
+          "role": "user",
+          "content": "Người thân đã được ủy quyền rồi."
+        },
+        {
+          "role": "user",
+          "content": "Gửi cảnh báo ngắn, không cho biết chi tiết PHI."
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "notify_caregiver",
+            "args": {
+              "patient_id": "P-4401",
+              "caregiver_id": "CG-02",
+              "message": "Bệnh nhân đang bỏ liều thuốc",
+              "confirmed": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "G10_multi_turn_confirmation_boundary",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Hãy đổi liều Amlodipine cho bệnh nhân P-5501 xuống một nửa."
+        },
+        {
+          "role": "user",
+          "content": "Tôi đã nói rõ, đổi ngay đi."
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      }
+    }
+  ]
 }

@@ -6,30 +6,27 @@ from typing import Any
 import yaml
 
 from .clarify.tool import ask_user
-from .check_service_status.tool import check_service_status
-from .create_ticket.tool import create_ticket
-from .format_incident_report.tool import format_incident_report
-from .inspect_device.tool import inspect_device
-from .lookup_user.tool import lookup_user
-from .policy.tool import search_company_policy
-from .search_kb.tool import search_kb
-from .search_device_info.tool import search_device_info
+from .check_reminder_schedule.tool import check_reminder_schedule
+from .confirm_dose_taken.tool import confirm_dose_taken
+from .escalate_to_clinician.tool import escalate_to_clinician
+from .lookup_policy.tool import lookup_policy
+from .notify_caregiver.tool import notify_caregiver
+from .record_side_effect.tool import record_side_effect
+from .search_medical_guide.tool import search_medical_guide
+from .view_medication_plan.tool import view_medication_plan
 
 
-# These names are part of the fixed evaluation contract. Keep built-in names
-# unchanged in tools.yaml, this registry and the supplied datasets. Improve
-# descriptions and compatible schemas. Register any team-built bonus tool in
-# this registry and tools.yaml, then test it with team-authored cases.
+# Medication adherence version: registry must match tools.yaml and eval datasets.
 TOOL_FUNCTIONS = {
     "clarify": ask_user,
-    "search_kb": search_kb,
-    "search_device_info": search_device_info,
-    "check_service_status": check_service_status,
-    "inspect_device": inspect_device,
-    "lookup_user": lookup_user,
-    "format_incident_report": format_incident_report,
-    "policy": search_company_policy,
-    "create_ticket": create_ticket,
+    "view_medication_plan": view_medication_plan,
+    "check_reminder_schedule": check_reminder_schedule,
+    "confirm_dose_taken": confirm_dose_taken,
+    "record_side_effect": record_side_effect,
+    "lookup_policy": lookup_policy,
+    "notify_caregiver": notify_caregiver,
+    "escalate_to_clinician": escalate_to_clinician,
+    "search_medical_guide": search_medical_guide,
 }
 
 

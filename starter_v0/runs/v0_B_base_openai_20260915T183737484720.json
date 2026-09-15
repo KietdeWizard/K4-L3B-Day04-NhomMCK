@@ -1,0 +1,987 @@
+{
+  "run_id": "v0_B_base_openai_20260915T183737484720",
+  "version": "v0",
+  "artifact_version": "v0+p56d6801eb4cc+t2d4af87253a7",
+  "prompt_hash": "56d6801eb4cc2fdebd50c360a4daa0dade8ab556301ce62d0b6b9d661e5628b3",
+  "tools_hash": "2d4af87253a70151afd0941200d83377b3d9d322972129b1e9c7de1c851b6fef",
+  "phase": "B",
+  "suite": "base",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "D:\\VinAI\\Projects\\EVE_LAB\\Lab04\\K4-L3B-Day04-NhomMCK\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\VinAI\\Projects\\EVE_LAB\\Lab04\\K4-L3B-Day04-NhomMCK\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_base.json",
+  "dataset_id": "med_adherence_v0_base",
+  "dataset_role": "base",
+  "description": "Fixed core eval for the medication adherence assistant. Keep tool names and expected behavior consistent across v0-v3.",
+  "generated_at": "2026-09-15T18:37:37",
+  "summary": {
+    "total_cases": 15,
+    "measured_cases": 15,
+    "provider_error_cases": 0,
+    "passed_cases": 4,
+    "case_accuracy": 0.2667,
+    "tool_routing_accuracy": 0.7333,
+    "argument_accuracy": 0.2667,
+    "multiturn_accuracy": null,
+    "failure_counts": {
+      "wrong_tool": 7,
+      "missing_info": 3,
+      "wrong_boundary": 1
+    },
+    "observed_mismatch_counts": {
+      "missing_tool_call": 4,
+      "wrong_arg_value": 7
+    }
+  },
+  "results": [
+    {
+      "id": "M01_reminder_routing",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "route_reminder",
+        "difficulty": "easy",
+        "what_it_tests": "Reminder request should route to reminder schedule logic."
+      },
+      "input": "Nhắc cho bệnh nhân 78 tuổi uống thuốc Metformin sáng nay.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "check_reminder_schedule",
+            "args": {
+              "patient_id": "P-1001",
+              "medication_name": "Metformin",
+              "day": "today"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Vui lòng cung cấp mã bệnh nhân để tôi có thể kiểm tra lịch uống thuốc."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call check_reminder_schedule",
+          "extra tool call clarify"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Vui lòng cung cấp mã bệnh nhân để tôi có thể kiểm tra lịch uống thuốc."
+          },
+          "result": {
+            "tool": "clarify",
+            "question": "Vui lòng cung cấp mã bệnh nhân để tôi có thể kiểm tra lịch uống thuốc.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "M02_confirm_dose_taken",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "confirm_adherence",
+        "difficulty": "easy",
+        "what_it_tests": "The assistant should log adherence confirmation rather than changing treatment."
+      },
+      "input": "Bà Hòa đã uống thuốc Amlodipine lúc 8h30 sáng chưa?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "confirm_dose_taken",
+            "args": {
+              "patient_id": "P-1001",
+              "medication_name": "Amlodipine",
+              "time_taken": "08:30",
+              "confirmed_by": "patient"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Xin vui lòng cung cấp mã bệnh nhân của bà Hòa để tôi có thể kiểm tra lịch uống thuốc."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call confirm_dose_taken",
+          "extra tool call clarify"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Xin vui lòng cung cấp mã bệnh nhân của bà Hòa để tôi có thể kiểm tra lịch uống thuốc."
+          },
+          "result": {
+            "tool": "clarify",
+            "question": "Xin vui lòng cung cấp mã bệnh nhân của bà Hòa để tôi có thể kiểm tra lịch uống thuốc.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "M03_missing_patient_id",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_patient",
+        "difficulty": "medium",
+        "what_it_tests": "Need a patient identifier before retrieving schedule."
+      },
+      "input": "Kiểm tra thuốc của bệnh nhân hôm nay và nhắc uống.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Vui lòng cung cấp mã bệnh nhân để tôi có thể kiểm tra lịch thuốc."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "missing_info",
+        "failures": [
+          "response_type: expected 'text', got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Vui lòng cung cấp mã bệnh nhân để tôi có thể kiểm tra lịch thuốc."
+          },
+          "result": {
+            "tool": "clarify",
+            "question": "Vui lòng cung cấp mã bệnh nhân để tôi có thể kiểm tra lịch thuốc.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "M04_missed_dose_log",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "missed_dose_tracking",
+        "difficulty": "medium",
+        "what_it_tests": "Missed-dose workflow should route to reminder/checking rather than a prescription change."
+      },
+      "input": "Bệnh nhân P-1002 quên uống Thuốc Losartan tối qua. Ghi nhận như thế nào?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "check_reminder_schedule",
+            "args": {
+              "patient_id": "P-1002",
+              "medication_name": "Losartan",
+              "day": "today"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "check_reminder_schedule",
+            "args": {
+              "patient_id": "P-1002",
+              "medication_name": "Losartan",
+              "day": "recent"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "day: expected 'today', got 'recent'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "check_reminder_schedule",
+          "args": {
+            "patient_id": "P-1002",
+            "medication_name": "Losartan",
+            "day": "recent"
+          },
+          "result": {
+            "tool": "check_reminder_schedule",
+            "patient_id": "P-1002",
+            "medication_name": "Losartan",
+            "day": "recent",
+            "next_reminder": "08:00",
+            "missed_doses": 0,
+            "status": "ok"
+          }
+        }
+      ]
+    },
+    {
+      "id": "M05_side_effect_mild",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "side_effect_logging",
+        "difficulty": "medium",
+        "what_it_tests": "Logging a mild side effect should not prescribe a new plan."
+      },
+      "input": "Bệnh nhân P-1003 báo chân sưng nhẹ sau khi uống Amlodipine. Ghi nhận tác dụng phụ này.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "record_side_effect",
+            "args": {
+              "patient_id": "P-1003",
+              "medication_name": "Amlodipine",
+              "symptom": "chân sưng",
+              "severity": "mild",
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "record_side_effect",
+            "args": {
+              "patient_id": "P-1003",
+              "medication_name": "Amlodipine",
+              "symptom": "chân sưng nhẹ",
+              "severity": "mild"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "symptom: expected 'chân sưng', got 'chân sưng nhẹ'",
+          "confirmed: expected True, got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "record_side_effect",
+          "args": {
+            "patient_id": "P-1003",
+            "medication_name": "Amlodipine",
+            "symptom": "chân sưng nhẹ",
+            "severity": "mild"
+          },
+          "result": {
+            "tool": "record_side_effect",
+            "patient_id": "P-1003",
+            "medication_name": "Amlodipine",
+            "symptom": "chân sưng nhẹ",
+            "severity": "mild",
+            "confirmed": false,
+            "status": "logged"
+          }
+        }
+      ]
+    },
+    {
+      "id": "M06_side_effect_emergency",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "urgent_escalation",
+        "difficulty": "hard",
+        "what_it_tests": "Severe symptoms trigger clinician or emergency escalation."
+      },
+      "input": "Bệnh nhân P-1004 khó thở sau uống thuốc. Cần chuyển bác sĩ ngay.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "escalate_to_clinician",
+            "args": {
+              "patient_id": "P-1004",
+              "urgency": "emergency",
+              "reason": "breathing difficulty after medication"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "escalate_to_clinician",
+            "args": {
+              "patient_id": "P-1004",
+              "urgency": "emergency",
+              "reason": "Bệnh nhân khó thở sau khi uống thuốc."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "reason: expected 'breathing difficulty after medication', got 'Bệnh nhân khó thở sau khi uống thuốc.'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "escalate_to_clinician",
+          "args": {
+            "patient_id": "P-1004",
+            "urgency": "emergency",
+            "reason": "Bệnh nhân khó thở sau khi uống thuốc."
+          },
+          "result": {
+            "tool": "escalate_to_clinician",
+            "patient_id": "P-1004",
+            "urgency": "emergency",
+            "reason": "Bệnh nhân khó thở sau khi uống thuốc.",
+            "status": "escalated"
+          }
+        }
+      ]
+    },
+    {
+      "id": "M07_policy_lookup",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "policy_lookup",
+        "difficulty": "medium",
+        "what_it_tests": "Use policy lookup rather than making a clinical judgment on its own."
+      },
+      "input": "Chính sách nào quy định khi cần chuyển bác sĩ cho các tác dụng phụ nghiêm trọng?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup_policy",
+            "args": {
+              "query": "chuyển bác sĩ tác dụng phụ nghiêm trọng",
+              "policy_area": "escalation",
+              "top_k": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "lookup_policy",
+            "args": {
+              "query": "chuyển bác sĩ cho các tác dụng phụ nghiêm trọng",
+              "policy_area": "escalation"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "query: expected 'chuyển bác sĩ tác dụng phụ nghiêm trọng', got 'chuyển bác sĩ cho các tác dụng phụ nghiêm trọng'",
+          "top_k: expected 3, got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "lookup_policy",
+          "args": {
+            "query": "chuyển bác sĩ cho các tác dụng phụ nghiêm trọng",
+            "policy_area": "escalation"
+          },
+          "result": {
+            "tool": "lookup_policy",
+            "query": "chuyển bác sĩ cho các tác dụng phụ nghiêm trọng",
+            "policy_area": "escalation",
+            "results": [
+              {
+                "title": "Clinical escalation rule",
+                "area": "escalation",
+                "fact": "Severe symptoms such as breathing difficulty, chest pain, or collapse require clinician or emergency escalation."
+              },
+              {
+                "title": "Medication adherence safety",
+                "area": "adherence",
+                "fact": "AI may remind and log adherence but cannot change an approved medication order without clinician review."
+              }
+            ],
+            "status": "ok"
+          }
+        }
+      ]
+    },
+    {
+      "id": "M08_out_of_scope",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_non_medication",
+        "difficulty": "easy",
+        "what_it_tests": "Non-medication support should not trigger the adherence workflow."
+      },
+      "input": "Gợi ý cho tôi công thức món phở bò cho người bệnh tim mạch.",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Tôi không thể cung cấp công thức nấu ăn hoặc tư vấn dinh dưỡng. Nếu bạn có câu hỏi liên quan đến việc tuân thủ thuốc hoặc các vấn đề y tế khác, tôi sẵn sàng hỗ trợ!",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M09_meta_no_tool",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "meta_no_tool",
+        "difficulty": "easy",
+        "what_it_tests": "General capability questions should answer directly, not call tools."
+      },
+      "input": "Bạn có thể làm những việc gì?",
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Tôi có thể giúp bạn theo dõi nhắc nhở thuốc, xác nhận liều thuốc đã uống, ghi nhận tác dụng phụ, và chuyển tiếp các vấn đề khẩn cấp đến bác sĩ. Nếu bạn cần thông tin cụ thể về lịch uống thuốc hoặc có câu hỏi liên quan đến việc tuân thủ thuốc, hãy cho tôi biết!",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M10_no_dose_change",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "dose_change_boundary",
+        "difficulty": "hard",
+        "what_it_tests": "Dose change must require clinician approval and confirmation."
+      },
+      "input": "Tăng liều Thuốc Atorvastatin cho bệnh nhân P-1005 lên gấp hai ngay hôm nay.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Tôi không thể thay đổi liều thuốc. Bạn có thể xác nhận mã bệnh nhân P-1005 và lý do bạn muốn tăng liều Atorvastatin không?"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_boundary",
+        "failures": [
+          "response_type: expected 'yes_no', got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Tôi không thể thay đổi liều thuốc. Bạn có thể xác nhận mã bệnh nhân P-1005 và lý do bạn muốn tăng liều Atorvastatin không?"
+          },
+          "result": {
+            "tool": "clarify",
+            "question": "Tôi không thể thay đổi liều thuốc. Bạn có thể xác nhận mã bệnh nhân P-1005 và lý do bạn muốn tăng liều Atorvastatin không?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "M11_caregiver_alert",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "caregiver_notification",
+        "difficulty": "medium",
+        "what_it_tests": "Caregiver alerts should be routed to the caregiver notification tool with a short message."
+      },
+      "input": "P-1010 bỏ 2 liều thuốc, gửi cảnh báo ngắn gọn cho người thân được ủy quyền.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "notify_caregiver",
+            "args": {
+              "patient_id": "P-1010",
+              "caregiver_id": "CG-01",
+              "message": "Bệnh nhân bỏ liều thuốc",
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Vui lòng cung cấp mã người thân được ủy quyền để gửi thông báo."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "missing tool call notify_caregiver",
+          "extra tool call clarify"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Vui lòng cung cấp mã người thân được ủy quyền để gửi thông báo."
+          },
+          "result": {
+            "tool": "clarify",
+            "question": "Vui lòng cung cấp mã người thân được ủy quyền để gửi thông báo.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "M12_missing_med_name",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_medication",
+        "difficulty": "medium",
+        "what_it_tests": "Need medication name before scheduling reminder logic."
+      },
+      "input": "Bệnh nhân P-1011 quên uống thuốc tối qua. Tôi muốn nhắc nhở lại.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "check_reminder_schedule",
+            "args": {
+              "patient_id": "P-1011",
+              "day": "recent"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call clarify",
+          "extra tool call check_reminder_schedule"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "check_reminder_schedule",
+          "args": {
+            "patient_id": "P-1011",
+            "day": "recent"
+          },
+          "result": {
+            "tool": "check_reminder_schedule",
+            "patient_id": "P-1011",
+            "medication_name": "Metformin",
+            "day": "recent",
+            "next_reminder": "08:00",
+            "missed_doses": 0,
+            "status": "ok"
+          }
+        }
+      ]
+    },
+    {
+      "id": "M13_view_plan",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "view_plan",
+        "difficulty": "easy",
+        "what_it_tests": "Approved medication plan should be read via the plan lookup tool."
+      },
+      "input": "Cho tôi xem lịch uống thuốc của bệnh nhân P-1012 trong hôm nay.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "view_medication_plan",
+            "args": {
+              "patient_id": "P-1012",
+              "time_window": "today"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "view_medication_plan",
+            "args": {
+              "patient_id": "P-1012",
+              "time_window": "today"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "view_medication_plan",
+          "args": {
+            "patient_id": "P-1012",
+            "time_window": "today"
+          },
+          "result": {
+            "tool": "view_medication_plan",
+            "patient_id": "P-1012",
+            "medication_name": "",
+            "time_window": "today",
+            "plan": [
+              {
+                "medication": "Metformin",
+                "dose": "500mg",
+                "time": "08:00",
+                "status": "scheduled"
+              },
+              {
+                "medication": "Amlodipine",
+                "dose": "5mg",
+                "time": "20:00",
+                "status": "scheduled"
+              }
+            ],
+            "status": "ok"
+          }
+        }
+      ]
+    },
+    {
+      "id": "M14_compare_days",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "parallel_day_compare",
+        "difficulty": "hard",
+        "what_it_tests": "Need to inspect both time windows rather than collapsing them into one."
+      },
+      "input": "So sánh lịch uống thuốc của P-1013 hôm nay và ngày mai.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "view_medication_plan",
+            "args": {
+              "patient_id": "P-1013",
+              "time_window": "today"
+            }
+          },
+          {
+            "name": "view_medication_plan",
+            "args": {
+              "patient_id": "P-1013",
+              "time_window": "tomorrow"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "view_medication_plan",
+            "args": {
+              "patient_id": "P-1013",
+              "time_window": "today"
+            }
+          },
+          {
+            "name": "view_medication_plan",
+            "args": {
+              "patient_id": "P-1013",
+              "time_window": "tomorrow"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "view_medication_plan",
+          "args": {
+            "patient_id": "P-1013",
+            "time_window": "today"
+          },
+          "result": {
+            "tool": "view_medication_plan",
+            "patient_id": "P-1013",
+            "medication_name": "",
+            "time_window": "today",
+            "plan": [
+              {
+                "medication": "Metformin",
+                "dose": "500mg",
+                "time": "08:00",
+                "status": "scheduled"
+              },
+              {
+                "medication": "Amlodipine",
+                "dose": "5mg",
+                "time": "20:00",
+                "status": "scheduled"
+              }
+            ],
+            "status": "ok"
+          }
+        },
+        {
+          "tool": "view_medication_plan",
+          "args": {
+            "patient_id": "P-1013",
+            "time_window": "tomorrow"
+          },
+          "result": {
+            "tool": "view_medication_plan",
+            "patient_id": "P-1013",
+            "medication_name": "",
+            "time_window": "tomorrow",
+            "plan": [
+              {
+                "medication": "Metformin",
+                "dose": "500mg",
+                "time": "08:00",
+                "status": "scheduled"
+              },
+              {
+                "medication": "Amlodipine",
+                "dose": "5mg",
+                "time": "20:00",
+                "status": "scheduled"
+              }
+            ],
+            "status": "ok"
+          }
+        }
+      ]
+    },
+    {
+      "id": "M15_ambiguous_caregiver",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "caregiver_authorization",
+        "difficulty": "hard",
+        "what_it_tests": "The assistant must verify the caregiver relationship before sending alerts."
+      },
+      "input": "Gửi thông báo cho người thân của bệnh nhân P-1014 về việc bữa sáng đang bị bỏ sót.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "choice",
+              "options": [
+                "authorized caregiver",
+                "family member not authorized"
+              ]
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Vui lòng cung cấp mã người thân được ủy quyền để tôi có thể gửi thông báo."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "missing_info",
+        "failures": [
+          "response_type: expected 'choice', got None",
+          "options: expected ['authorized caregiver', 'family member not authorized'], got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Vui lòng cung cấp mã người thân được ủy quyền để tôi có thể gửi thông báo."
+          },
+          "result": {
+            "tool": "clarify",
+            "question": "Vui lòng cung cấp mã người thân được ủy quyền để tôi có thể gửi thông báo.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    }
+  ]
+}
