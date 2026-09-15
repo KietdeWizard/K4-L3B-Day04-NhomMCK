@@ -56,14 +56,14 @@ Giữ toàn bộ source trong `starter_v0/`, đồng thời commit evidence th�
 
 Không commit `.env`, API key, dữ liệu thật, `.venv`, cache hoặc ticket phát sinh. Tên repo, cấu trúc nộp và checklist đầy đủ nằm ở [SUBMISSION.md](SUBMISSION.md).
 
-## Chuẩn bị và bắt đầu
+## Chuẩn bị và bắt đầupython -m pip install
 
 Cần Python 3.10+, Git/GitHub và API key của một provider hỗ trợ tool calling. Chỉ cần `TAVILY_API_KEY` nếu nhóm dùng tìm kiếm thông tin thiết bị trên web.
 
 ```powershell
 cd starter_v0
 py -3 -m venv .venv
-.\.venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1 
 python -m pip install -r requirements.txt
 Copy-Item .env.example .env
 ```

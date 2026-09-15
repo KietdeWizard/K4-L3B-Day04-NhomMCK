@@ -42,4 +42,3 @@
 - Điều đã học: cần đặt rõ điều kiện hỏi lại, xác nhận và giới hạn của AI trong từng tool; khi xử lý tác dụng phụ hoặc thay đổi thuốc, AI không được tự suy đoán hoặc hành động mà không có xác nhận.
 - AI/công cụ đã dùng và cách kiểm tra: cùng sử dụng repo, prompt, tool YAML, dữ liệu eval và các file run JSON; kiểm tra bằng cách đối chiếu hành vi agent với expected tool / expected boundary.
 - Thời điểm đã tự nộp URL repo chung trên VLearn: cùng với nhóm khi tiến độ và định dạng bài nộp đã được thống nhất; do cùng máy, việc đồng bộ và xác nhận được thực hiện chung.
-
