@@ -1,0 +1,28 @@
+{
+  "transcript_id": "v0_openrouter_20260915T194453754572",
+  "version": "v0",
+  "artifact_version": "v0+pa742ea370d56+t4b2f9ddb7b94",
+  "prompt_hash": "a742ea370d5607da03ffdf41f8c5caf88048a3ec1a495fb65828ac87c6848a36",
+  "tools_hash": "4b2f9ddb7b9469458620e7434d4fbdf118015e06284c47bfc2cc97f0ea87a48a",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "D:\\VinAI\\Projects\\EVE_LAB\\Lab04\\K4-L3B-Day04-NhomMCK\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\VinAI\\Projects\\EVE_LAB\\Lab04\\K4-L3B-Day04-NhomMCK\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-09-15T19:44:53",
+  "updated_at": "2026-09-15T19:45:09",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-09-15T19:45:03",
+      "user": "hi",
+      "status": "provider_error",
+      "assistant_text": null,
+      "rounds": [],
+      "tool_events": [],
+      "error": "RuntimeError: Missing API key env var: OPENROUTER_API_KEY",
+      "ended_at": "2026-09-15T19:45:05"
+    }
+  ]
+}

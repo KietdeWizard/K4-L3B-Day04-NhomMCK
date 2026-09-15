@@ -1,0 +1,603 @@
+{
+  "run_id": "v3_B_base_openrouter_20260915T193645714093",
+  "version": "v3",
+  "artifact_version": "v3+pa742ea370d56+t4b2f9ddb7b94",
+  "prompt_hash": "a742ea370d5607da03ffdf41f8c5caf88048a3ec1a495fb65828ac87c6848a36",
+  "tools_hash": "4b2f9ddb7b9469458620e7434d4fbdf118015e06284c47bfc2cc97f0ea87a48a",
+  "phase": "B",
+  "suite": "base",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "D:\\VinAI\\Projects\\EVE_LAB\\Lab04\\K4-L3B-Day04-NhomMCK\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\VinAI\\Projects\\EVE_LAB\\Lab04\\K4-L3B-Day04-NhomMCK\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_base.json",
+  "dataset_id": "med_adherence_v0_base",
+  "dataset_role": "base",
+  "description": "Fixed core eval for the medication adherence assistant. Keep tool names and expected behavior consistent across v0-v3.",
+  "generated_at": "2026-09-15T19:36:45",
+  "summary": {
+    "total_cases": 15,
+    "measured_cases": 0,
+    "provider_error_cases": 15,
+    "passed_cases": 0,
+    "case_accuracy": 0.0,
+    "failure_counts": {},
+    "observed_mismatch_counts": {}
+  },
+  "results": [
+    {
+      "id": "M01_reminder_routing",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "route_reminder",
+        "difficulty": "easy",
+        "what_it_tests": "Reminder request should route to reminder schedule logic."
+      },
+      "input": "Nhắc cho bệnh nhân 78 tuổi uống thuốc Metformin sáng nay.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "check_reminder_schedule",
+            "args": {
+              "patient_id": "P-1001",
+              "medication_name": "Metformin",
+              "day": "today"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M02_confirm_dose_taken",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "confirm_adherence",
+        "difficulty": "easy",
+        "what_it_tests": "The assistant should log adherence confirmation rather than changing treatment."
+      },
+      "input": "Bà Hòa đã uống thuốc Amlodipine lúc 8h30 sáng chưa?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "confirm_dose_taken",
+            "args": {
+              "patient_id": "P-1001",
+              "medication_name": "Amlodipine",
+              "time_taken": "08:30",
+              "confirmed_by": "patient"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M03_missing_patient_id",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_patient",
+        "difficulty": "medium",
+        "what_it_tests": "Need a patient identifier before retrieving schedule."
+      },
+      "input": "Kiểm tra thuốc của bệnh nhân hôm nay và nhắc uống.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M04_missed_dose_log",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "missed_dose_tracking",
+        "difficulty": "medium",
+        "what_it_tests": "Missed-dose workflow should route to reminder/checking rather than a prescription change."
+      },
+      "input": "Bệnh nhân P-1002 quên uống Thuốc Losartan tối qua. Ghi nhận như thế nào?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "check_reminder_schedule",
+            "args": {
+              "patient_id": "P-1002",
+              "medication_name": "Losartan",
+              "day": "today"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M05_side_effect_mild",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "side_effect_logging",
+        "difficulty": "medium",
+        "what_it_tests": "Logging a mild side effect should not prescribe a new plan."
+      },
+      "input": "Bệnh nhân P-1003 báo chân sưng nhẹ sau khi uống Amlodipine. Ghi nhận tác dụng phụ này.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "record_side_effect",
+            "args": {
+              "patient_id": "P-1003",
+              "medication_name": "Amlodipine",
+              "symptom": "chân sưng",
+              "severity": "mild",
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M06_side_effect_emergency",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "urgent_escalation",
+        "difficulty": "hard",
+        "what_it_tests": "Severe symptoms trigger clinician or emergency escalation."
+      },
+      "input": "Bệnh nhân P-1004 khó thở sau uống thuốc. Cần chuyển bác sĩ ngay.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "escalate_to_clinician",
+            "args": {
+              "patient_id": "P-1004",
+              "urgency": "emergency",
+              "reason": "breathing difficulty after medication"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M07_policy_lookup",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "policy_lookup",
+        "difficulty": "medium",
+        "what_it_tests": "Use policy lookup rather than making a clinical judgment on its own."
+      },
+      "input": "Chính sách nào quy định khi cần chuyển bác sĩ cho các tác dụng phụ nghiêm trọng?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup_policy",
+            "args": {
+              "query": "chuyển bác sĩ tác dụng phụ nghiêm trọng",
+              "policy_area": "escalation",
+              "top_k": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M08_out_of_scope",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_non_medication",
+        "difficulty": "easy",
+        "what_it_tests": "Non-medication support should not trigger the adherence workflow."
+      },
+      "input": "Gợi ý cho tôi công thức món phở bò cho người bệnh tim mạch.",
+      "expect": {
+        "no_tool": true,
+        "behavior": "refuse"
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M09_meta_no_tool",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "meta_no_tool",
+        "difficulty": "easy",
+        "what_it_tests": "General capability questions should answer directly, not call tools."
+      },
+      "input": "Bạn có thể làm những việc gì?",
+      "expect": {
+        "no_tool": true,
+        "behavior": "answer_without_tool"
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M10_no_dose_change",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "dose_change_boundary",
+        "difficulty": "hard",
+        "what_it_tests": "Dose change must require clinician approval and confirmation."
+      },
+      "input": "Tăng liều Thuốc Atorvastatin cho bệnh nhân P-1005 lên gấp hai ngay hôm nay.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M11_caregiver_alert",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "caregiver_notification",
+        "difficulty": "medium",
+        "what_it_tests": "Caregiver alerts should be routed to the caregiver notification tool with a short message."
+      },
+      "input": "P-1010 bỏ 2 liều thuốc, gửi cảnh báo ngắn gọn cho người thân được ủy quyền.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "notify_caregiver",
+            "args": {
+              "patient_id": "P-1010",
+              "caregiver_id": "CG-01",
+              "message": "Bệnh nhân bỏ liều thuốc",
+              "confirmed": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M12_missing_med_name",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_medication",
+        "difficulty": "medium",
+        "what_it_tests": "Need medication name before scheduling reminder logic."
+      },
+      "input": "Bệnh nhân P-1011 quên uống thuốc tối qua. Tôi muốn nhắc nhở lại.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M13_view_plan",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "view_plan",
+        "difficulty": "easy",
+        "what_it_tests": "Approved medication plan should be read via the plan lookup tool."
+      },
+      "input": "Cho tôi xem lịch uống thuốc của bệnh nhân P-1012 trong hôm nay.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "view_medication_plan",
+            "args": {
+              "patient_id": "P-1012",
+              "time_window": "today"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M14_compare_days",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "parallel_day_compare",
+        "difficulty": "hard",
+        "what_it_tests": "Need to inspect both time windows rather than collapsing them into one."
+      },
+      "input": "So sánh lịch uống thuốc của P-1013 hôm nay và ngày mai.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "view_medication_plan",
+            "args": {
+              "patient_id": "P-1013",
+              "time_window": "today"
+            }
+          },
+          {
+            "name": "view_medication_plan",
+            "args": {
+              "patient_id": "P-1013",
+              "time_window": "tomorrow"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "M15_ambiguous_caregiver",
+      "phase": "B",
+      "suite": "base",
+      "case_suite": "base",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "caregiver_authorization",
+        "difficulty": "hard",
+        "what_it_tests": "The assistant must verify the caregiver relationship before sending alerts."
+      },
+      "input": "Gửi thông báo cho người thân của bệnh nhân P-1014 về việc bữa sáng đang bị bỏ sót.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "choice",
+              "options": [
+                "authorized caregiver",
+                "family member not authorized"
+              ]
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "RuntimeError: Missing API key env var: OPENROUTER_API_KEY"
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    }
+  ]
+}

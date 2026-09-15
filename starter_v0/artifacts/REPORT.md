@@ -162,7 +162,7 @@ Chỉ nộp bài khi mọi mục dưới đây đã được kiểm tra trên br
 - [ ] Mỗi thành viên có ít nhất một commit trong lịch sử branch nộp bài.
 - [ ] Phần nhận xét chung trong TEAM.md đã hoàn thành và có evidence.
 - [ ] Mỗi thành viên đã tự viết và commit mục INDIVIDUAL trong TEAM.md.
-- [ ] `system_prompt.md`, `tools.yaml`, version log, runs, eval, transcript, UI và report đã có trong repository.
+- [x] `system_prompt.md`, `tools.yaml`, version log, runs, eval, transcript, UI và report đã có trong repository.
 - [ ] Không có `.env`, API key, token, dữ liệu thật, cache hoặc generated ticket.
 - [ ] Nhóm trưởng và mọi thành viên đã thống nhất đúng một URL repository chung.
 - [ ] Nhóm trưởng và mọi thành viên sẽ nộp cùng URL đó trên VLearn.

@@ -1,0 +1,304 @@
+{
+  "transcript_id": "v3_openai_streamlit_20260915T195912073346",
+  "version": "v3",
+  "artifact_version": "v3+pa742ea370d56+t4b2f9ddb7b94",
+  "prompt_hash": "a742ea370d5607da03ffdf41f8c5caf88048a3ec1a495fb65828ac87c6848a36",
+  "tools_hash": "4b2f9ddb7b9469458620e7434d4fbdf118015e06284c47bfc2cc97f0ea87a48a",
+  "provider": "openai",
+  "model": null,
+  "system_prompt": "D:\\VinAI\\Projects\\EVE_LAB\\Lab04\\K4-L3B-Day04-NhomMCK\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\VinAI\\Projects\\EVE_LAB\\Lab04\\K4-L3B-Day04-NhomMCK\\starter_v0\\artifacts\\tools.yaml",
+  "max_tool_rounds": 4,
+  "created_at": "2026-09-15T19:59:12",
+  "updated_at": "2026-09-15T20:03:15",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-09-15T20:02:08",
+      "user": "hi toi la benh nhan P1102",
+      "status": "answered",
+      "assistant_text": "Xin chào! Bạn có thể cho tôi biết tên thuốc mà bạn đang sử dụng không?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Xin chào! Bạn có thể cho tôi biết tên thuốc mà bạn đang sử dụng không?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "provider": "openai",
+      "model": null,
+      "ended_at": "2026-09-15T20:02:13"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-09-15T20:02:22",
+      "user": "toi quen mat thuoc gi roi",
+      "status": "answered",
+      "assistant_text": "Bạn có thể cung cấp tên thuốc mà bạn đang sử dụng không? Điều này sẽ giúp tôi kiểm tra lịch nhắc thuốc cho bạn.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Bạn có thể cung cấp tên thuốc mà bạn đang sử dụng không? Điều này sẽ giúp tôi kiểm tra lịch nhắc thuốc cho bạn.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "provider": "openai",
+      "model": null,
+      "ended_at": "2026-09-15T20:02:23"
+    },
+    {
+      "turn_index": 3,
+      "started_at": "2026-09-15T20:02:30",
+      "user": "Losartan",
+      "status": "answered",
+      "assistant_text": "Bạn không có liều thuốc nào bị bỏ lỡ cho thuốc Losartan hôm nay. Nhắc nhở tiếp theo của bạn sẽ vào lúc 08:00. Nếu bạn cần thêm thông tin hoặc hỗ trợ khác, hãy cho tôi biết!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "check_reminder_schedule",
+              "args": {
+                "patient_id": "P1102",
+                "medication_name": "Losartan"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "check_reminder_schedule",
+              "args": {
+                "patient_id": "P1102",
+                "medication_name": "Losartan"
+              },
+              "result": {
+                "tool": "check_reminder_schedule",
+                "patient_id": "P1102",
+                "medication_name": "Losartan",
+                "day": "today",
+                "next_reminder": "08:00",
+                "missed_doses": 0,
+                "status": "ok"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Bạn không có liều thuốc nào bị bỏ lỡ cho thuốc Losartan hôm nay. Nhắc nhở tiếp theo của bạn sẽ vào lúc 08:00. Nếu bạn cần thêm thông tin hoặc hỗ trợ khác, hãy cho tôi biết!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "check_reminder_schedule",
+          "args": {
+            "patient_id": "P1102",
+            "medication_name": "Losartan"
+          },
+          "result": {
+            "tool": "check_reminder_schedule",
+            "patient_id": "P1102",
+            "medication_name": "Losartan",
+            "day": "today",
+            "next_reminder": "08:00",
+            "missed_doses": 0,
+            "status": "ok"
+          }
+        }
+      ],
+      "provider": "openai",
+      "model": null,
+      "ended_at": "2026-09-15T20:02:33"
+    },
+    {
+      "turn_index": 4,
+      "started_at": "2026-09-15T20:02:55",
+      "user": "thuoc nay uong khi nao",
+      "status": "answered",
+      "assistant_text": "Bạn cần uống thuốc Losartan với liều 500mg vào lúc 08:00 và 5mg vào lúc 20:00 hôm nay. Nếu bạn có thêm câu hỏi hoặc cần hỗ trợ khác, hãy cho tôi biết!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "view_medication_plan",
+              "args": {
+                "patient_id": "P1102",
+                "medication_name": "Losartan"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "view_medication_plan",
+              "args": {
+                "patient_id": "P1102",
+                "medication_name": "Losartan"
+              },
+              "result": {
+                "tool": "view_medication_plan",
+                "patient_id": "P1102",
+                "medication_name": "Losartan",
+                "time_window": "today",
+                "plan": [
+                  {
+                    "medication": "Losartan",
+                    "dose": "500mg",
+                    "time": "08:00",
+                    "status": "scheduled"
+                  },
+                  {
+                    "medication": "Losartan",
+                    "dose": "5mg",
+                    "time": "20:00",
+                    "status": "scheduled"
+                  }
+                ],
+                "status": "ok"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Bạn cần uống thuốc Losartan với liều 500mg vào lúc 08:00 và 5mg vào lúc 20:00 hôm nay. Nếu bạn có thêm câu hỏi hoặc cần hỗ trợ khác, hãy cho tôi biết!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "view_medication_plan",
+          "args": {
+            "patient_id": "P1102",
+            "medication_name": "Losartan"
+          },
+          "result": {
+            "tool": "view_medication_plan",
+            "patient_id": "P1102",
+            "medication_name": "Losartan",
+            "time_window": "today",
+            "plan": [
+              {
+                "medication": "Losartan",
+                "dose": "500mg",
+                "time": "08:00",
+                "status": "scheduled"
+              },
+              {
+                "medication": "Losartan",
+                "dose": "5mg",
+                "time": "20:00",
+                "status": "scheduled"
+              }
+            ],
+            "status": "ok"
+          }
+        }
+      ],
+      "provider": "openai",
+      "model": null,
+      "ended_at": "2026-09-15T20:02:58"
+    },
+    {
+      "turn_index": 5,
+      "started_at": "2026-09-15T20:03:06",
+      "user": "toi uong xong thay dau dau qua",
+      "status": "answered",
+      "assistant_text": "Bạn có thể cho tôi biết mức độ đau đầu của bạn là nhẹ, vừa hay nặng không? Điều này sẽ giúp tôi ghi nhận tác dụng phụ một cách chính xác.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Bạn có thể cho tôi biết mức độ đau đầu của bạn là nhẹ, vừa hay nặng không? Điều này sẽ giúp tôi ghi nhận tác dụng phụ một cách chính xác.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "provider": "openai",
+      "model": null,
+      "ended_at": "2026-09-15T20:03:07"
+    },
+    {
+      "turn_index": 6,
+      "started_at": "2026-09-15T20:03:12",
+      "user": "dau chet me",
+      "status": "answered",
+      "assistant_text": "Tôi đã ghi nhận tác dụng phụ của bạn là đau đầu với mức độ nặng sau khi uống thuốc Losartan. \n\nNếu triệu chứng không giảm hoặc bạn cảm thấy không khỏe, hãy liên hệ với bác sĩ ngay lập tức để được hỗ trợ. Nếu bạn cần thêm thông tin hoặc hỗ trợ khác, hãy cho tôi biết!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "record_side_effect",
+              "args": {
+                "patient_id": "P1102",
+                "medication_name": "Losartan",
+                "symptom": "đau đầu",
+                "severity": "severe"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "record_side_effect",
+              "args": {
+                "patient_id": "P1102",
+                "medication_name": "Losartan",
+                "symptom": "đau đầu",
+                "severity": "severe"
+              },
+              "result": {
+                "tool": "record_side_effect",
+                "patient_id": "P1102",
+                "medication_name": "Losartan",
+                "symptom": "đau đầu",
+                "severity": "severe",
+                "confirmed": false,
+                "status": "logged"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Tôi đã ghi nhận tác dụng phụ của bạn là đau đầu với mức độ nặng sau khi uống thuốc Losartan. \n\nNếu triệu chứng không giảm hoặc bạn cảm thấy không khỏe, hãy liên hệ với bác sĩ ngay lập tức để được hỗ trợ. Nếu bạn cần thêm thông tin hoặc hỗ trợ khác, hãy cho tôi biết!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "record_side_effect",
+          "args": {
+            "patient_id": "P1102",
+            "medication_name": "Losartan",
+            "symptom": "đau đầu",
+            "severity": "severe"
+          },
+          "result": {
+            "tool": "record_side_effect",
+            "patient_id": "P1102",
+            "medication_name": "Losartan",
+            "symptom": "đau đầu",
+            "severity": "severe",
+            "confirmed": false,
+            "status": "logged"
+          }
+        }
+      ],
+      "provider": "openai",
+      "model": null,
+      "ended_at": "2026-09-15T20:03:15"
+    }
+  ]
+}
